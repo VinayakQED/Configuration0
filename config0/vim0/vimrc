@@ -1,0 +1,20 @@
+" Show line numbers
+set number
+
+"Automatically wrap text that extends beyond the screen length
+set wrap
+
+"Encoding 
+set encoding=utf-8
+
+"Status bar
+set laststatus=2
+
+syntax on "Enable syntax highlighting
+
+set cursorline "Highlight current line
+
+"Call the .vimrc.plug file
+if filereadable(expand("~/.vimrc.plug"))
+    source ~/.vimrc.plug
+endif

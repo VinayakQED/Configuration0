@@ -1,0 +1,14 @@
+call plug#begin('~/.vim/plugged')
+
+"Fugitive Vim Github Wrapper
+Plug 'tpope/vim-gugitive'
+
+
+
+
+
+
+"WRITE ABHOVE THIS LINE
+
+call plug#end()
+
