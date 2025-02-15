@@ -1,0 +1,268 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, lib, pkgs, ... }:
+
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+   <nixos-hardware/lenovo/thinkpad/p52>
+ ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "Asia/Kolkata";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_IN";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_IN";
+    LC_IDENTIFICATION = "en_IN";
+    LC_MEASUREMENT = "en_IN";
+    LC_MONETARY = "en_IN";
+    LC_NAME = "en_IN";
+    LC_NUMERIC = "en_IN";
+    LC_PAPER = "en_IN";
+    LC_TELEPHONE = "en_IN";
+    LC_TIME = "en_IN";
+  };
+
+  # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
+  services.xserver.enable = true;
+
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
+  # Enable hyprland tiling window manager
+  programs.hyprland.enable = true;
+
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.vinayak = {
+    isNormalUser = true;
+    description = "vinayak";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      kdePackages.kate
+    #  thunderbird
+    ];
+  };
+
+  # Install firefox.
+  programs.firefox.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
+        pkgs.wget
+	pkgs.vim
+	pkgs.neovim
+	pkgs.tmux
+	pkgs.htop
+	pkgs.tlp
+        pkgs.auto-cpufreq
+	pkgs.tpacpi-bat
+	pkgs.git
+	pkgs.proton-pass
+	pkgs.protonmail-desktop
+	#pkgs.protonmail-bridge-gui
+	pkgs.vlc
+	pkgs.libreoffice-qt6-fresh
+	pkgs.gparted
+	pkgs.persepolis
+	pkgs.flatpak
+	pkgs.appimagekit
+	pkgs.fastfetch
+	#pkgs.virtualbox
+	#pkgs.linuxKernel.packages.linux_zen.virtualbox
+	#pkgs.virtualboxWithExtpack
+	#pkgs.virtualboxKvm
+	#pkgs.virtualboxHeadless
+	#pkgs.virtualboxHardened
+	#pkgs.linuxKernel.packages.linux_lqx.virtualbox
+	#pkgs.linuxKernel.packages.linux_libre.virtualbox
+	#pkgs.linuxKernel.packages.linux_zen.virtualboxGuestAdditions
+	#pkgs.linuxKernel.packages.linux_xanmod_stable.virtualbox
+	pkgs.waydroid
+	pkgs.wl-clipboard
+	pkgs.bottles
+	pkgs.wine
+	pkgs.qemu
+	pkgs.vmware-workstation
+	pkgs.docker
+	pkgs.timeshift
+	pkgs.btop-rocm
+	pkgs.btop
+	#pkgs.haskellPackages.utf
+	#pkgs.perl540Packages.PerlIOutf8_strict
+	pkgs.gcc
+	pkgs.vscode
+	pkgs.gdb
+	pkgs.clang
+	#pkgs.g++
+	pkgs.codeblocksFull
+	pkgs.codeblocks
+	pkgs.gnome-terminal
+	pkgs.ncdu
+	pkgs.nvtopPackages.nvidia
+	pkgs.btop
+	pkgs.lshw
+	#pkgs.veracrypt
+	pkgs.fzf
+	pkgs.fwupd
+	pkgs.fwupd-efi
+	pkgs.libsForQt5.kdenlive
+	#pkgs.kdePackages.kdenlive
+	pkgs.openshot-qt
+	pkgs.flowblade
+	pkgs.blender
+	pkgs.lightworks
+	pkgs.pciutils
+	pkgs.driversi686Linux.mesa-demos
+	pkgs.bleachbit
+	pkgs.glmark2
+	pkgs.mesa-demos
+	pkgs.gpustat
+	pkgs.python312Packages.gpustat
+	#pkgs.gimp
+	pkgs.gimp-with-plugins
+	pkgs.calibre
+	pkgs.calibre-web
+	#pkgs.Restic 
+	#pkgs.nvidia-system-monitor-qt
+	pkgs.tor-browser
+	pkgs.kitty
+	pkgs.gnome-tweaks
+	pkgs.geany
+	pkgs.geany-with-vte
+	pkgs.axel
+	pkgs.tldr
+	#pkgs.tldc
+	pkgs.tealdeer
+	#pkgs.lsd
+	pkgs.bat
+	pkgs.entr
+	pkgs.librewolf
+	#pkgs.libvirt
+	pkgs.virt-manager
+	pkgs.openssh
+	pkgs.libsForQt5.kdeconnect-kde
+	pkgs.gnomeExtensions.gsconnect
+	pkgs.vscodium
+	#pkgs.urbackup-client
+	pkgs.stacer
+	pkgs.notepadqq
+	pkgs.notesnook
+	#pkgs.gnomeExtentions.forge
+	pkgs.gnomeExtensions.logo-menu
+	#pkgs.gnomeExtensions.app-menu-back
+	pkgs.eza
+	pkgs.nerdfonts
+	pkgs.waybar
+	#pkgs.swaybg
+	pkgs.wofi
+	#pkgs.hyprpaper
+	pkgs.font-awesome
+	pkgs.hyprshot
+	pkgs.swaynotificationcenter
+	pkgs.libnotify
+	pkgs.hyprlock
+	pkgs.joplin
+	pkgs.joplin-desktop
+	#pkgs
+	#pkgs
+	#pkgs
+
+  ];
+        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	virtualisation.vmware.host.enable = true;
+	#virtualisation.virtualbox.host.enable = true;
+	#users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+	virtualisation.libvirtd.enable = true;
+	#virtualisation.virtualbox.host.enableExtensionPack = true;
+	#virtualisation.virtualbox.guest.enable = true;
+  	#virtualisation.virtualbox.guest.dragAndDrop = true;
+	services.flatpak.enable = true;
+    
+	virtualisation.waydroid.enable = true;
+
+	services.throttled.enable = lib.mkDefault true;
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # List services that you want to enable:
+
+  # Enable the OpenSSH daemon.
+   services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.11"; # Did you read the comment?
+
+}
